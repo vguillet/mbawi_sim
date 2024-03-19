@@ -45,15 +45,7 @@ import networkx as nx
 # Local Imports
 from orchestra_config.orchestra_config import *     # KEEP THIS LINE, DO NOT REMOVE
 from maaf_msgs.msg import TeamCommStamped, Bid, Allocation
-from maaf_allocation_node.node_config import *
-# from .task_dataclasses import Task, Task_log
-# from .fleet_dataclasses import Agent, Fleet
-# from .state_dataclasses import Agent_state
-# from .tools import *
-#
-# from .Bidding_logics.random_bid import random_bid
-# from .Bidding_logics.graph_weighted_manhattan_distance_bid import graph_weighted_manhattan_distance_bid
-
+from orchestra_config.sim_config import *
 
 ##################################################################################################################
 
