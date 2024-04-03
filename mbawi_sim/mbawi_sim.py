@@ -145,6 +145,8 @@ class mbawi_sim(Node):
 
         self.last_task_update = datetime.now()
 
+        self.get_logger().info(F"Received team message from {msg.source}")
+
     def goal_callback(self, msg: TeamCommStamped):
         """
         Callback for the goal subscription.
@@ -159,6 +161,8 @@ class mbawi_sim(Node):
         #         self.get_logger().warning(f"!!!!!!!!!! Agent {msg.source} not found in allocation when unassigning")
 
         self.last_task_update = datetime.now()
+
+        self.get_logger().info(F"Received goal from {msg.source}")
 
     def publish_epoch(self):
         """
