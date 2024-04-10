@@ -77,12 +77,12 @@ class mbawi_sim(Node):
         )
 
         # ---------- fleet_msgs
-        # self.fleet_msgs_sub = self.create_subscription(
-        #     msg_type=TeamCommStamped,
-        #     topic=topic_fleet_msgs,
-        #     callback=self.team_msg_subscriber_callback,
-        #     qos_profile=qos_fleet_msgs
-        # )
+        self.fleet_msgs_sub = self.create_subscription(
+            msg_type=TeamCommStamped,
+            topic=topic_fleet_msgs,
+            callback=self._team_msg_subscriber_callback,
+            qos_profile=qos_fleet_msgs
+        )
 
         # ---------- goals
         self.goals_sub = self.create_subscription(
@@ -130,18 +130,10 @@ class mbawi_sim(Node):
         # -> Update last task update
         self.last_task_update = datetime.now()
 
-    # def env_callback(self, msg: TeamCommStamped):
-    #     data = loads(msg.memo)
-    #     self.env = {
-    #         "graph": nx.node_link_graph(data["graph"]),
-    #         "pos": {eval(k): v for k, v in data["pos"].items()}
-    #     }
-
-    def team_msg_subscriber_callback(self, msg: TeamCommStamped):
+    def _team_msg_subscriber_callback(self, msg: TeamCommStamped):
         """
         Callback for the team message subscription.
         """
-        # self.msg_count += 1
 
         self.last_task_update = datetime.now()
 
@@ -151,15 +143,6 @@ class mbawi_sim(Node):
         """
         Callback for the goal subscription.
         """
-        # if msg.meta_action == "assign":
-        #     self.allocation[msg.source] = loads(msg.memo)
-        #
-        # elif msg.meta_action == "unassign":
-        #     try:
-        #         self.allocation[msg.source] = None
-        #     except KeyError:
-        #         self.get_logger().warning(f"!!!!!!!!!! Agent {msg.source} not found in allocation when unassigning")
-
         self.last_task_update = datetime.now()
 
         self.get_logger().info(F"Received goal from {msg.source}")
