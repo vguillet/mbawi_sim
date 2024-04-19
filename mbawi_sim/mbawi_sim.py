@@ -65,7 +65,7 @@ class mbawi_sim(Node):
         self.last_task_update = None
         self.epoch = -1
 
-        # self.env = None
+        # self.environment = None
 
         # ---------------------------------- Subscribers
         # ---------- simulator_signals
