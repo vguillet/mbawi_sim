@@ -2,20 +2,7 @@
 ##################################################################################################################
 
 """
-Parent class for the CAF framework. To use, the following must be defined in the child class:
-MAF:
-    Optional:
-    - on_set_state
-
-CAF:
-    - message_to_publish(self) (property)
-    - process_msg(self, msg)
-    - next_state(self) (property)
-    # - action_to_take(self) (property)
-    # - process_step(self, obs, reward, done, infos)
-
-    Optional:
-    - on_new_task(self, task_id, task_data)
+Sim stepper node. Manages the simulation steps and progress
 """
 
 # Built-in/Generic Imports
@@ -49,6 +36,7 @@ from orchestra_config.sim_config import *
 
 ##################################################################################################################
 
+PRINTS = False
 
 class mbawi_sim(Node):
     def __init__(self):
@@ -137,7 +125,8 @@ class mbawi_sim(Node):
 
         self.last_task_update = datetime.now()
 
-        self.get_logger().info(F"Received team message from {msg.source}")
+        if PRINTS:
+            self.get_logger().info(F"Received team message from {msg.source}")
 
     def goal_callback(self, msg: TeamCommStamped):
         """
@@ -145,7 +134,8 @@ class mbawi_sim(Node):
         """
         self.last_task_update = datetime.now()
 
-        self.get_logger().info(F"Received goal from {msg.source}")
+        if PRINTS:
+            self.get_logger().info(F"Received goal from {msg.source}")
 
     def publish_epoch(self):
         """
@@ -173,7 +163,9 @@ class mbawi_sim(Node):
                 "epoch": self.epoch,
             })
 
-            self.get_logger().info(F"Stepping simulation : epoch {self.epoch}")
+            self.get_logger().info(f"\n\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+                                   f"\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Stepping simulation : epoch {self.epoch}"
+                                   f"\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
 
             # -> Publish new epoch
             self.sim_epoch_pub.publish(msg)
